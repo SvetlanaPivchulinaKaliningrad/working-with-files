@@ -36,38 +36,34 @@ def get_shop_list_by_dishes(dishes_list, person_count):
 pprint(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2))
 
 # Задача №3:
+# from pprint import pprint
+import os  # для возможности задать значение переменной name_1(2 or 3).
 with open('1.txt', 'r', encoding='utf-8') as file_1:
-    line_1 = {}
-    count_1 = 0
-    for line in file_1.readlines():
-        count_1 += 1
-        line_1['1.txt'] = count_1
-with open('1.txt', 'r', encoding='utf-8') as file_1:
-    text_1 = file_1.read()
+    file_list_1 = file_1.readlines()  # делаю список
+    # pprint(file_list_1)
+    name_1 = os.path.basename(r'D:\света\День рождения 2024\обучение2024\1.txt')
+    # print(name_1)
 
 with open('2.txt', 'r', encoding='utf-8') as file_2:
-    line_2 = {}
-    count_2 = 0
-    for line in file_2.readlines():
-        count_2 += 1
-        line_2['2.txt'] = count_2
-with open('2.txt', 'r', encoding='utf-8') as file_2:
-    text_2 = file_2.read()
+    file_list_2 = file_2.readlines()
+    name_2 = os.path.basename(r'D:\света\День рождения 2024\обучение2024\2.txt')
 
 with open('3.txt', 'r', encoding='utf-8') as file_3:
-    line_3 = {}
-    count_3 = 0
-    for line in file_3.readlines():
-        count_3 += 1
-        line_3['3.txt'] = count_3
-with open('3.txt', 'r', encoding='utf-8') as file_3:
-    text_3 = file_3.read()
+    file_list_3 = file_3.readlines()
+    name_3 = os.path.basename(r'D:\света\День рождения 2024\обучение2024\3.txt')
 
-join = sorted(list(line_1.items()) + list(line_2.items()) + list(line_3.items()), key=lambda x: x[1])
+temp_dict = {name_1: file_list_1, name_2: file_list_2, name_3: file_list_3}
+sorted_tuple = sorted(temp_dict.items(), key=lambda x: len(x[1]))  # создаю кортеж и сортирую при помощи лямбда
+# по длине списка(количество строк).
 
-with open('result.txt', 'w', encoding='utf-8') as file_result:
-    for line in join:
-        file_result.write(f'{join[0][0]}\n {join[0][1]}\n {text_2}\n {join[1][0]}\n {join[1][1]}\n {text_1}\n'
-                          f'{join[2][0]}\n {join[2][1]}\n {text_3}\n')
+sorted_dict = dict(sorted_tuple)  # создаю обратно словарь.
 
-# print(file_result)
+#
+with open('result_text.txt', 'w', encoding='utf-8') as final_file:
+    for key, value in sorted_dict.items():
+        print(key)
+        final_file.write('\n')
+        final_file.writelines(sorted_dict[key])
+        for i in range(len(value)):
+            print(f'Строка {i + 1} файла {key}')
+            final_file.write(f'Строка {i + 1} файла {key} - {value[i]}')
